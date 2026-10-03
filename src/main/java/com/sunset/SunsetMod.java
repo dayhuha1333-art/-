@@ -137,7 +137,7 @@ public class SunsetMod {
         if (triggerBotEnabled) return;
 
         List<EntityLivingBase> targets = new ArrayList<>();
-        for (Entity e : mc.world.getEntitiesWithinAABB(EntityLivingBase.class,
+        for (EntityLivingBase e : mc.world.getEntitiesWithinAABB(EntityLivingBase.class,
                 mc.player.getEntityBoundingBox().grow(4.5))) {
             if (e == mc.player) continue;
             if (!e.isEntityAlive()) continue;
@@ -220,7 +220,7 @@ public class SunsetMod {
                     .offset(x - e.posX - vx, y - e.posY - vy, z - e.posZ - vz)
                     .grow(0.1);
 
-            RenderGlobal.drawSelectionBoundingBox(bb);
+            RenderGlobal.drawSelectionBoundingBox(bb, r, g, b, 1f);
         }
 
         GlStateManager.popAttrib();
