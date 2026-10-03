@@ -1,0 +1,14 @@
+[
+{
+  "modid": "sunset",
+  "name": "Sunset",
+  "description": "Sunset mod",
+  "version": "1.0",
+  "mcversion": "1.12.2",
+  "authorList": ["Sunset"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
