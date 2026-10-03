@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+version = '1.0'
+group = 'com.sunset'
+archivesBaseName = 'Sunset'
+
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            mods { sunset { source sourceSets.main } }
+        }
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+}
+
+jar.finalizedBy('reobfJar')
