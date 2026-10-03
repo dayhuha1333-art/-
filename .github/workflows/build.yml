@@ -1,8 +1,40 @@
-- name: Download Gradle 4.10.2
-  run: |
-    wget -q https://services.gradle.org/distributions/gradle-4.10.2-bin.zip
-    unzip -q gradle-4.10.2-bin.zip
-    echo "$PWD/gradle-4.10.2/bin" >> $GITHUB_PATH
+name: Build Sunset Mod
 
-- name: Generate wrapper with Gradle 4.10.2
-  run: gradle wrapper --gradle-version 4.10.2
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Download Gradle 4.10.2
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-4.10.2-bin.zip
+          unzip -q gradle-4.10.2-bin.zip
+          echo "$PWD/gradle-4.10.2/bin" >> $GITHUB_PATH
+
+      - name: Verify Gradle version
+        run: gradle -v
+
+      - name: Generate wrapper with Gradle 4.10.2
+        run: gradle wrapper --gradle-version 4.10.2
+
+      - name: Build
+        run: ./gradlew build --no-daemon
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: Sunset-mod
+          path: build/libs/*.jar
+          if-no-files-found: error
