@@ -17,11 +17,17 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
-      - name: Gradle wrapper
+      - name: Download Gradle 7.6
         run: |
-          if [ ! -f gradlew ]; then
-            gradle wrapper --gradle-version 7.6
-          fi
+          wget -q https://services.gradle.org/distributions/gradle-7.6-bin.zip
+          unzip -q gradle-7.6-bin.zip
+          echo "$PWD/gradle-7.6/bin" >> $GITHUB_PATH
+
+      - name: Verify Gradle version
+        run: gradle -v
+
+      - name: Generate wrapper with Gradle 7.6
+        run: gradle wrapper --gradle-version 7.6
 
       - name: Build
         run: ./gradlew build --no-daemon
@@ -31,3 +37,4 @@ jobs:
         with:
           name: Sunset-mod
           path: build/libs/*.jar
+          if-no-files-found: error
